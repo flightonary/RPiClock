@@ -1,0 +1,14 @@
+<%= render 'form', submit: 'Update' %>
+
+<div class="container">
+  <div class="action-row">
+    <div class="action-field">
+      <%= link_to 'Back', alarms_path, class: "back" %>
+    </div>
+  </div>
+  <div class="action-row">
+    <div class="action-field">
+      <%= link_to 'Delete', @alarm, class: "delete", method: :delete, data: { confirm: 'Are you sure?' } %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,53 @@
+<% @alarms.each do |alarm| %>
+  <div class="alarmview">
+    <a href="<%= edit_alarm_path(alarm) %>">
+      <div class="info">
+        <div class="time">
+          <p class="h1"><%= alarm.time %></p>
+        </div>
+        <div class="opts">
+          <p class="small">
+            <%= alarm.title %>, <%= alarm.repeat.gsub(',', ' ') %><br>
+            <%= 'Holiday off' if alarm.holiday_off %>
+          </p>
+        </div>
+      </div>
+    </a>
+    <div class="switch">
+      <div class="center-block">
+        <%= render 'alarm_onoff_switch', alarm: alarm %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('.onoffswitch-checkbox').click(function() {
+      var form = $(this).closest('form');
+      $.ajax({
+        type: form.attr('method'),
+        url:  form.attr('action'),
+        data: form.serialize(),
+        dataType: "JSON"
+      }).done(function(data){
+        console.log('alarm[enabled] update success');
+      }).fail(function(data){
+        alert('Failure in server communication');
+      });
+    });
+  });
+</script>
+
+<br>
+
+<div class="container">
+  <div class="margin-row"></div>
+
+  <div class="action-row">
+    <div class="action-field">
+      <%= link_to '', new_alarm_path, class: 'addition' %>
+      <!--<span data-link="<%= new_alarm_path %>" class="addition">-->
+    </div>
+  </div>
+</div>

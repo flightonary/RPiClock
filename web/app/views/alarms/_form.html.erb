@@ -1,0 +1,153 @@
+<%= form_for(@alarm) do |f| %>
+  <% if @alarm.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@alarm.errors.count, "error") %> prohibited this alarm from being saved:</h2>
+
+      <ul>
+      <% @alarm.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="container">
+    <div class="margin-row"></div>
+
+    <div class="clock-row">
+      <div class="clock-view">
+        <div class="clockpicker">
+          <div class="timebox" id="alarm_time_content"><%= @alarm.time %></div>
+          <%= f.hidden_field :time, class: "form-control" %>
+        </div>
+      </div>
+      <script type="text/javascript">
+        var input = $('.clockpicker').clockpicker({
+          placement: 'bottom',
+          align: 'right',
+          autoclose: true,
+          'default': 'now',
+          afterDone: function() {
+            var time = $("#alarm_time").attr("value");
+            $("#alarm_time_content").html(time);
+          }
+        });
+
+        // Manually toggle to the clockpicker view
+        $('#alarm_time_content').click(function(e){
+            // Have to stop propagation here
+            e.stopPropagation();
+            input.clockpicker('show');
+        });
+      </script>
+    </div>
+
+    <div class="std-row">
+      <div class="left-label">
+          <%= f.label :title %>
+        </div>
+      <div class="right-field">
+        <%= f.text_field :title %>
+      </div>
+    </div>
+
+    <div class="std-row">
+      <div class="left-label">
+        <%= f.label :mon %>
+      </div>
+      <div class="right-field">
+        <%= f.check_box :mon %>
+      </div>
+    </div>
+
+    <div class="std-row">
+      <div class="left-label">
+        <%= f.label :tue %>
+      </div>
+      <div class="right-field">
+        <%= f.check_box :tue %>
+      </div>
+    </div>
+
+    <div class="std-row">
+      <div class="left-label">
+        <%= f.label :wed %>
+      </div>
+      <div class="right-field">
+        <%= f.check_box :wed %>
+      </div>
+    </div>
+
+    <div class="std-row">
+      <div class="left-label">
+        <%= f.label :thu %>
+      </div>
+      <div class="right-field">
+        <%= f.check_box :thu %>
+      </div>
+    </div>
+
+    <div class="std-row">
+      <div class="left-label">
+        <%= f.label :fri %>
+      </div>
+      <div class="right-field">
+        <%= f.check_box :fri %>
+      </div>
+    </div>
+
+    <div class="std-row">
+      <div class="left-label">
+        <%= f.label :sat %>
+      </div>
+      <div class="right-field">
+        <%= f.check_box :sat %>
+      </div>
+    </div>
+
+    <div class="std-row">
+      <div class="left-label">
+        <%= f.label :sun %>
+      </div>
+      <div class="right-field">
+        <%= f.check_box :sun %>
+      </div>
+    </div>
+
+    <div class="std-row">
+      <div class="left-label">
+        <%= f.label :holiday_off %>
+      </div>
+      <div class="right-field">
+        <%= f.check_box :holiday_off %>
+      </div>
+    </div>
+
+    <div class="std-row">
+      <div class="left-label">
+        <%= f.label :sound %>
+      </div>
+      <div class="right-field">
+        <%= f.text_field :sound %>
+      </div>
+    </div>
+
+    <div class="std-row">
+      <div class="left-label">
+        <%= f.label :snooze %>
+      </div>
+      <div class="right-field">
+        <%= f.check_box :snooze %>
+      </div>
+    </div>
+
+    <div class="margin-row"></div>
+
+    <div class="action-row">
+      <div class="action-field">
+        <%= f.submit value: submit, class: "submit" %>
+      </div>
+    </div>
+
+  </div>
+<% end %>

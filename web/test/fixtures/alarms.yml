@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  time: MyString
+  enabled: false
+  repeat: MyString
+  holiday_off: false
+  sound: MyString
+  snooze: false
+
+two:
+  title: MyString
+  time: MyString
+  enabled: false
+  repeat: MyString
+  holiday_off: false
+  sound: MyString
+  snooze: false

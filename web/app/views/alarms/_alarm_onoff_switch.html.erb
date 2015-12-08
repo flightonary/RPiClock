@@ -1,0 +1,10 @@
+<%= form_for(alarm, remote: true) do |f| %>
+  <div class="onoffswitch">
+    <% switchId = "enabled_switch_" + alarm.id.to_s %>
+    <%= f.check_box :enabled, class: "onoffswitch-checkbox", id: switchId %>
+    <label class="onoffswitch-label" for="<%= switchId %>">
+        <span class="onoffswitch-inner"></span>
+        <span class="onoffswitch-switch"></span>
+    </label>
+  </div>
+<% end %>

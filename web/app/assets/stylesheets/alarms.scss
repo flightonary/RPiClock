@@ -1,0 +1,161 @@
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+.alarmview {
+  @include clearfix;
+  height: 100px;
+  border-bottom: solid 1px #aaaaaa;
+  font-size: 15px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+
+  .info {
+    @extend .pull-left;
+    height: 100%;
+    width:  75%;
+
+    .time {
+      height: 60%;
+      width:  100%;
+      display: table;
+
+      p {
+        display: table-cell;
+        vertical-align: middle;
+        padding-left: 10px;
+      }
+    }
+
+    .opts {
+      height: 40%;
+      width:  100%;
+      display: table;
+
+      p {
+        display: table-cell;
+        vertical-align: middle;
+        padding-left: 10px;
+      }
+    }
+  }
+
+  .switch {
+    @extend .pull-right;
+    height: 100%;
+    width:  25%;
+    position: relative;
+
+    .center-block {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 100%;
+      -webkit-transform: translate(-50%,-50%);
+      -moz-transform: translate(-50%,-50%);
+      transform: translate(-50%,-50%);
+    }
+  }
+}
+
+.clock-row {
+  height: 130px; width: 100%;
+
+  .clock-view {
+    @extend .col-xs-12;
+
+    .timebox {
+      text-align: center;
+      font-size: 64px; color: black; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+    }
+  }
+}
+
+.margin-row {
+  height: 14px;
+  width: 100%;
+}
+
+.std-row {
+  height: 50px;
+  width: 100%;
+  font-size: 15px; color: black; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+
+  .left-label {
+    @extend .col-xs-5;
+    vertical-align: center;
+    text-align: left;
+    &:first-child {
+      font-size: 18px;
+    }
+  }
+
+  .right-field {
+    @extend .col-xs-6;
+    vertical-align: center;
+    text-align: right;
+    &:first-child {
+      font-size: 18px;
+    }
+  }
+}
+
+.action-row {
+  @extend .std-row;
+
+  .action-field {
+    @extend .col-xs-12;
+    position: relative;
+
+    .btn-base {
+      position: absolute; top: 0; left: 0; right: 0; bottom: 0; margin: auto;
+
+      background: #EEE;
+      border: 1px solid #DDD; border-radius: 6px;
+      text-align: center;
+      width: 200px; height: 40px; padding: 8px 0;
+
+      font-size: 15px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+    }
+
+    .submit {
+      @extend .btn-base;
+      background: -moz-linear-gradient(top,#6379B8 0%,#415796);
+      background: -webkit-gradient(linear, left top, left bottom, from(#6379B8), to(#415796));
+    }
+
+    .back {
+      @extend .btn-base;
+      background: -moz-linear-gradient(top,#FFF 0%,#EEE);
+      background: -webkit-gradient(linear, left top, left bottom, from(#FFF), to(#EEE));
+      color: black;
+    }
+
+    .delete {
+      @extend .btn-base;
+      background: -moz-linear-gradient(top,#F22 0%,#E11);
+      background: -webkit-gradient(linear, left top, left bottom, from(#F22), to(#E11));
+    }
+
+    .addition {
+      position: absolute; top: 0; left: 0; right: 0; bottom: 0; margin: auto;
+      width: 40px; height: 40px;
+      border: 4px solid #555555; border-radius: 30px;
+
+      &:before {
+        position: absolute; top: 0; left: 0; right: 0; bottom: 0; margin: auto;
+        content: ""; display: block;
+        width: 22px; height: 4px;
+        background-color: #555555;
+      }
+
+      &:after {
+        position: absolute; top: 0; left: 0; right: 0; bottom: 0; margin: auto;
+        content: ""; display: block;
+        width: 22px; height: 4px;
+        background-color: #555555;
+        transform: rotate(90deg);
+        -webkit-transform: rotate(90deg);
+        -moz-transform: rotate(90deg);
+        -o-transform: rotate(90deg);
+      }
+    }
+  }
+}
