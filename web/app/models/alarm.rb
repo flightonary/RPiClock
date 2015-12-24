@@ -8,15 +8,19 @@ class Alarm < ActiveRecord::Base
   end
 
   def repeat
+    [:mon, :tue, :wed, :thu, :fri, :sat, :sun].inject('') { |s,d|
+      s += ',' + d.to_s if self.send(d)
+      s
+    }.gsub(/^,/, '')
+  end
+
+  def repeat_pretty
     if self.is_weekend
       'Weekend'
     elsif self.is_weekday
       'Weekday'
     else
-      [:mon, :tue, :wed, :thu, :fri, :sat, :sun].inject('') { |s,d|
-        s += ',' + d.to_s if self.send(d)
-        s
-      }.gsub(/^,/, '')
+      self.repeat
     end
   end
 end

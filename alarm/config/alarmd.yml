@@ -1,0 +1,10 @@
+log:
+  output: STDOUT
+  level:  DEBUG
+alarm:
+  location: http://localhost:3000/alarms.json
+  check_period: 2
+holiday:
+  location: http://s-proj.com/utils/checkHoliday.php
+  case_of_true: ['hoiday']
+  case_of_false: ['else']
