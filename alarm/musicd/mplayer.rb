@@ -16,7 +16,8 @@ require 'thread'
 
 module RPiClock
   class MPlayer
-    MPLAYER  = "mplayer -slave -quiet -softvol -nocache -nolirc -idle"
+    # mplayer -ao pulse:172.17.0.6 TomCat.wav
+    MPLAYER  = "mplayer -slave -idle -quiet -softvol"
     PARAMS = ['ANS_LENGTH=']
 
     def initialize

@@ -4,7 +4,7 @@ LABEL environment="development"
 
 # install required packages
 RUN apt-get update -qq
-RUN apt-get install -y mplayer2 supervisor
+RUN apt-get install -y mplayer2 libav-tools supervisor
 
 # build app environment
 RUN mkdir /app

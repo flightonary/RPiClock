@@ -15,6 +15,7 @@ alarm:
     - ./alarm:/app
     - /var/run/dbus:/var/run/dbus
     - /dev/snd:/dev/snd:rw
+    - ./alarm/mplayer.conf:/etc/mplayer/mplayer.conf
   links:
     - web:localhost
   privileged: true
