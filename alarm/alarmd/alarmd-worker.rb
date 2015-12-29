@@ -7,6 +7,7 @@
 # License, version 2.1 as published by the Free Software Foundation.
 # See the file "COPYING" for the exact licensing terms.
 
+require 'dbus'
 require 'message'
 require 'context'
 require 'alarm-db'
@@ -18,24 +19,37 @@ module RPiClock
     def initialize queue
       @queue = queue
       @alarmCheck = AlarmCheck.new
+      @musicd_iface = get_musicd_interface
     end
 
     def start
+      logger.info("[alarmd] alarmd-worker started")
       while true
         msg = @queue.pop
 
         case msg.type
         when :timeout
-          logger.debug("alarm check timer timeout")
-          @alarmCheck.read
+          logger.debug("[alarmd] alarm check timer timeout")
+          @alarmCheck.sync
           if @alarmCheck.needToAlarm?
-            logger.debug("alarm on !!")
+            logger.info("[alarmd] alarm on !!")
+            @musicd_iface.play_file('TomCat.wav')
           end
         else
-          logger.warn("undefined message")
+          logger.warn("[alarmd] undefined message")
         end
       end
     end
 
+    protected
+    def get_musicd_interface
+      bus = DBus::SystemBus.instance
+      service = bus.service("io.docker.container")
+      containerId = `hostname`.chop
+      object = service.object("/io/docker/container/#{containerId}")
+      object.introspect
+      object.default_iface = "io.docker.container.musicd"
+      return object
+    end
   end
 end

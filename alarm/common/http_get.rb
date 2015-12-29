@@ -35,6 +35,10 @@ module RPiClock
       uri = URI.parse(@location)
       begin
         response = Net::HTTP.start(uri.host, uri.port) do |http|
+          if uri.port == 443
+            http.use_ssl = true
+            http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+          end
           http.open_timeout = 5
           http.read_timeout = 10
           http.get(uri.request_uri)

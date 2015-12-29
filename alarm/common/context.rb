@@ -33,6 +33,7 @@ module RPiClock
 
     def initialize
       @logger = Logger.new STDOUT
+      $stdout.sync = true
     end
 
     def setup out, level

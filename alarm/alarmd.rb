@@ -15,12 +15,9 @@ require 'thread'
 require 'context'
 require 'alarmd-worker'
 require 'timer'
-require 'options'
 require 'message'
 
-opts = Options.parse(ARGV)
-
-RPiClock::Context::load_conf opts.conf_file
+RPiClock::Context::load_conf ARGV[0]
 
 conf = RPiClock::Context::conf
 RPiClock::Context::set_logger conf['log']['output'], conf['log']['level']

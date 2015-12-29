@@ -3,6 +3,7 @@ web:
   container_name: rpiclock_web
   command: bundle exec rails s -p 3000 -b '0.0.0.0'
   volumes:
+    - /etc/localtime:/etc/localtime:ro
     - ./web:/app
   ports:
     - "3000:3000"
@@ -12,10 +13,9 @@ alarm:
   container_name: rpiclock_alarm
   command: /usr/bin/supervisord -c supervisord.conf
   volumes:
-    - ./alarm:/app
+    - /etc/localtime:/etc/localtime:ro
     - /var/run/dbus:/var/run/dbus
-    - /dev/snd:/dev/snd:rw
-    - ./alarm/mplayer.conf:/etc/mplayer/mplayer.conf
+    - ./alarm:/app
+    - ./alarm/etc/mplayer/mplayer.conf:/etc/mplayer/mplayer.conf
   links:
     - web:localhost
-  privileged: true

@@ -18,18 +18,17 @@ module RPiClock
   class MPlayer
     # mplayer -ao pulse:172.17.0.6 TomCat.wav
     MPLAYER  = "mplayer -slave -idle -quiet -softvol"
-    PARAMS = ['ANS_LENGTH=']
 
     def initialize
       start()
     end
 
-    def play (path)
-      stop()
-      initParams()
+    def play_file (path)
       write_cmd("loadfile #{path}")
-      write_cmd('get_time_length')
-      waitParam(PARAMS[0])
+    end
+
+    def play_list (path)
+      write_cmd("loadlist #{path}")
     end
 
     def stop
@@ -42,7 +41,9 @@ module RPiClock
     end
 
     def get_time_length
-      return @params[PARAMS[0]].to_f
+      write_cmd('get_time_length')
+      response = wait_for_output('ANS_LENGTH')
+      return response == nil ? nil : response.split['='][1].to_f
     end
 
     def restart
@@ -53,16 +54,13 @@ module RPiClock
     protected
     def start
       @pipe = IO.popen(MPLAYER.split(" "), "r+")
-      @queue = Queue.new
+      @queueOfPipeOut = Queue.new
 
-      # observe params
-      initParams()
+      # observe outputs
       @readThread = Thread.new {
         while @pipe.closed? == false
           line = @pipe.gets.chomp
-          PARAMS.each { |key|
-            @queue.push({key=>line.gsub(/#{key}/, '')}) if line.include?(key)
-          }
+          @queueOfPipeOut.push line
         end
       }
     end
@@ -73,38 +71,27 @@ module RPiClock
       @pipe = nil
     end
 
-    def initParams
-      @queue.clear
-      @params = Hash.new
-    end
-
-    def waitParam (key)
-      # timeout thread
-      reqId = rand
-      th = Thread.new (reqId) { |reqId|
-        sleep(1)
-        @queue.push({'reqId'=>reqId})
-      }
-      while true
-        msg = @queue.pop
-        if msg['reqId'] == reqId
-          # timeout !!
-          STDERR.puts("[#{__FILE__}]waitParam: timeout")
-          return
-        else
-          @params.merge! msg
-          if msg[key] != nil
-            # get required param
-            th.kill
-            return
-          end
-        end
-      end
-    end
-
     def write_cmd (string)
       return if @pipe == nil
       @pipe.puts(string)
+    end
+
+    def wait_for_response (key)
+      # timeout thread
+      timeoutId = rand.to_s
+      th = Thread.new (timeoutId) { |timeoutId|
+        sleep(1)
+        @queueOfPipeOut.push(timeoutId)
+      }
+      while true
+        line = @queueOfPipeOut.pop
+        if line == timeoutId
+          STDERR.puts("[#{__FILE__}]waitParam: timeout")
+          return nil
+        else
+          return line if line.include?(key)
+        end
+      end
     end
   end
 end

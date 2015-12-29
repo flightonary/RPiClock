@@ -7,32 +7,43 @@
 # License, version 2.1 as published by the Free Software Foundation.
 # See the file "COPYING" for the exact licensing terms.
 
-require 'rubygems'
 require 'dbus'
 require 'message'
+require 'context'
 
 module RPiClock
-  class DBusInterface < DBus::Object
+  class DBusObject < DBus::Object
+    include Context
+
     def initialize objectName, queue
       super objectName
       @queue = queue
     end
 
-    dbus_interface "app.RPiClock.Musicd" do
-      dbus_method :start, "in rss:s, in lookup:s" do |rss, lookup|
+    dbus_interface "io.docker.container.musicd" do
+      dbus_method :play_file, "in path:s" do |path|
         msg = Message.new :dbus
-        msg[:player_action] = :start
+        msg[:player_action] = :play_file
+        msg[:path] = path
+        @queue.push msg
+      end
+
+      dbus_method :play_itunes_rss_preview, "in rss:s, in lookup:s" do |rss, lookup|
+        msg = Message.new :dbus
+        msg[:player_action] = :play_itunes_rss_preview
         msg[:rss] = rss
         msg[:lookup] = lookup
         @queue.push msg
       end
-    end
 
-    dbus_interface "app.RPiClock.Musicd" do
       dbus_method :stop, "" do
         msg = Message.new :dbus
         msg[:player_action] = :stop
         @queue.push msg
+      end
+
+      dbus_method :echo, "in voice:s, out ret:s" do |voice|
+        [voice]
       end
     end
   end
@@ -44,14 +55,20 @@ module RPiClock
 
     def start
       bus = DBus.system_bus
-      service = bus.request_service("app.RPiClock.Musicd")
+      service = bus.request_service("io.docker.container")
 
-      obj = DBusInterface.new("/app/RPiClock/Musicd", @queue)
+      containerId = `hostname`.chop
+      obj = DBusObject.new("/io/docker/container/#{containerId}", @queue)
       service.export(obj)
 
-      main = DBus::Main.new
-      main << bus
-      main.run
+      begin
+        main = DBus::Main.new
+        main << bus
+        main.run
+      rescue DBus::Error => e
+        logger.fatal(e)
+        exit 1
+      end
     end
   end
 end

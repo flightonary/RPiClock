@@ -19,7 +19,7 @@ module RPiClock
       @holidayCheck = HolidayCheck.new
     end
 
-    def read
+    def sync
       http_req = HttpGet.new conf['alarm']['location']
       http_req.onSuccess { |response|
         json = response.body
@@ -47,7 +47,7 @@ module RPiClock
   end
 
   class HolidayCheck
-    include RPiClock::Context
+    include Context
 
     def initialize
       @todayIsHoliday = nil
