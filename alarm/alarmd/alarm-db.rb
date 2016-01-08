@@ -7,7 +7,7 @@
 # License, version 2.1 as published by the Free Software Foundation.
 # See the file "COPYING" for the exact licensing terms.
 
-require 'http_get'
+require 'http-get'
 require 'json'
 
 module RPiClock
@@ -30,19 +30,13 @@ module RPiClock
       }.do
     end
 
-    def needToAlarm?
-      now = Time.now.strftime('%H:%M')
+    def tobeAlarmList
+      time = Time.now.strftime('%H:%M')
       week = Time.now.strftime('%a').downcase
-      alarms = @alarms.select { |a|
-        a['enabled'] && a['time'] == now && a['repeat'].include?(week)
+      @alarms.select { |a|
+        a['enabled'] && a['time'] == time && a['repeat'].include?(week) &&
+        ( a['holiday_off'] == false || @holidayCheck.holiday? == false )
       }
-      return false if alarms.empty?
-
-      if alarms[0]['holiday_off'] && @holidayCheck.holiday?
-        false
-      else
-        true
-      end
     end
   end
 
@@ -51,10 +45,11 @@ module RPiClock
 
     def initialize
       @todayIsHoliday = nil
+      @lastUpdate = ''
     end
 
     def holiday?
-      update if @todayIsHoliday.nil? || Time.now.strftime('%H:%M') == '00:00'
+      update if @todayIsHoliday.nil? || date != @lastUpdate
       if @todayIsHoliday.nil?
         false
       else
@@ -66,6 +61,7 @@ module RPiClock
       http_req = HttpGet.new conf['holiday']['location']
       http_req.onSuccess { |response|
         flag = response.body
+        @lastUpdate = date
         @todayIsHoliday =
           if conf['holiday']['case_of_true'].include? flag
             true
@@ -78,6 +74,11 @@ module RPiClock
       }.onFailure { |response|
         logger.warn('can not get holiday flag : ' + response.value)
       }.do
+    end
+
+    private
+    def date
+      Time.now.strftime('%F')
     end
   end
 end

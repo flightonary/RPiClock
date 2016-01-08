@@ -86,10 +86,9 @@ module RPiClock
       while true
         line = @queueOfPipeOut.pop
         if line == timeoutId
-          STDERR.puts("[#{__FILE__}]waitParam: timeout")
           return nil
-        else
-          return line if line.include?(key)
+        elsif line.include?(key)
+          return line
         end
       end
     end

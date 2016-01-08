@@ -20,4 +20,5 @@ web/db/*.sqlite3-journal
 # Ignore all logfiles and tempfiles.
 web/log/*
 !web/log/.keep
-web/tmp
+web/tmp/*
+!web/tmp/.keep

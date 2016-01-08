@@ -28,11 +28,10 @@ module RPiClock
         @queue.push msg
       end
 
-      dbus_method :play_itunes_rss_preview, "in rss:s, in lookup:s" do |rss, lookup|
+      dbus_method :play_list, "in list:s" do |list|
         msg = Message.new :dbus
-        msg[:player_action] = :play_itunes_rss_preview
-        msg[:rss] = rss
-        msg[:lookup] = lookup
+        msg[:player_action] = :play_list
+        msg[:list] = list
         @queue.push msg
       end
 

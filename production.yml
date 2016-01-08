@@ -1,0 +1,6 @@
+web:
+  dockerfile: Dockerfile.prod
+  command: ./run.sh production
+
+alarm:
+  dockerfile: Dockerfile.prod

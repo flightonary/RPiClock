@@ -7,19 +7,20 @@
 # License, version 2.1 as published by the Free Software Foundation.
 # See the file "COPYING" for the exact licensing terms.
 
+require 'http-get'
+require 'rexml/document'
+
 module RPiClock
-  class ITunesMusicList
+  module ITunesMusicList
     extend self
 
-    def trackUrlListFromSingle rssURL
+    def trackUrlListFromSongs rssURL
       trackUrlList = Array.new
       http_req = HttpGet.new rssURL
       http_req.onSuccess { |response|
         doc = REXML::Document.new(response.body)
-        doc.elements.each('/feed/entry/link') { |e|
-          if e.attributes.has_key?('assetType') && e.attributes['assetType'] == 'preview'
-            trackUrlList << e.attributes['href']
-          end
+        doc.elements.each("/feed/entry/link[@assetType='preview']") { |e|
+          trackUrlList << e.attributes['href']
         }
       }.onFailure { |response|
         logger.warn('can not http get : ' + response.value)

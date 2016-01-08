@@ -1,0 +1,17 @@
+# Docker base image
+FROM resin/rpi-raspbian:jessie
+
+# install required packages
+RUN apt-get update -qq
+RUN apt-get install -y ruby ruby-dev bundler
+RUN apt-get install -y autoconf libtool automake build-essential
+RUN apt-get install -y nodejs
+RUN apt-get install -y zlib1g-dev libsqlite3-dev
+RUN apt-get clean
+
+# build app environment
+RUN mkdir /app
+WORKDIR /app
+ADD Gemfile /app/Gemfile
+ADD Gemfile.lock /app/Gemfile.lock
+RUN bundle install --without test development

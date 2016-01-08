@@ -13,8 +13,6 @@ require 'json'
 
 module RPiClock
   class HttpGet
-    include Context
-
     def initialize location
       @location  = location
       @onSuccess = Proc.new {|response|}
@@ -33,12 +31,13 @@ module RPiClock
 
     def do
       uri = URI.parse(@location)
+      request = Net::HTTP.new(uri.host, uri.port)
+      if uri.scheme == 'https'
+        request.use_ssl = true
+        request.verify_mode = OpenSSL::SSL::VERIFY_NONE
+      end
       begin
-        response = Net::HTTP.start(uri.host, uri.port) do |http|
-          if uri.port == 443
-            http.use_ssl = true
-            http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-          end
+        response = request.start do |http|
           http.open_timeout = 5
           http.read_timeout = 10
           http.get(uri.request_uri)
@@ -50,7 +49,7 @@ module RPiClock
           @onFailure.call response
         end
       rescue => e
-        logger.error(e)
+        p e
       end
     end
   end

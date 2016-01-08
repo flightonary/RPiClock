@@ -8,9 +8,11 @@
 # See the file "COPYING" for the exact licensing terms.
 
 require 'dbus'
+require 'json'
 require 'message'
 require 'context'
 require 'alarm-db'
+require 'itunes-music-list'
 
 module RPiClock
   class AlarmdWorker
@@ -30,14 +32,22 @@ module RPiClock
         case msg.type
         when :timeout
           logger.debug("[alarmd] alarm check timer timeout")
-          @alarmCheck.sync
-          if @alarmCheck.needToAlarm?
-            logger.info("[alarmd] alarm on !!")
-            @musicd_iface.play_file('TomCat.wav')
-          end
+          check_alarm
         else
           logger.warn("[alarmd] undefined message")
         end
+      end
+    end
+
+    def check_alarm
+      @alarmCheck.sync
+      tobeAlarms = @alarmCheck.tobeAlarmList
+      if not tobeAlarms.empty?
+        logger.info("[alarmd] alarm on")
+        rssUrl = conf['itunes']['rss']['topsongs']
+        trackUrlList = ITunesMusicList.trackUrlListFromSongs rssUrl
+        @musicd_iface.play_list(JSON.generate(trackUrlList))
+        #@musicd_iface.play_file('TomCat.wav')
       end
     end
 
