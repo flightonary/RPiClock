@@ -32,22 +32,25 @@ module RPiClock
         case msg.type
         when :timeout
           logger.debug("[alarmd] alarm check timer timeout")
-          check_alarm
+          do_alarm
         else
           logger.warn("[alarmd] undefined message")
         end
       end
     end
 
-    def check_alarm
+    def do_alarm
       @alarmCheck.sync
       tobeAlarms = @alarmCheck.tobeAlarmList
       if not tobeAlarms.empty?
         logger.info("[alarmd] alarm on")
-        rssUrl = conf['itunes']['rss']['topsongs']
-        trackUrlList = ITunesMusicList.trackUrlListFromSongs rssUrl
-        @musicd_iface.play_list(JSON.generate(trackUrlList))
-        #@musicd_iface.play_file('TomCat.wav')
+        if tobeAlarms[0]['sound'].downcase == 'tomcat'
+          @musicd_iface.play_file('TomCat.wav')
+        else
+          rssUrl = conf['itunes']['rss']['topsongs']
+          trackUrlList = ITunesMusicList.trackUrlListFromSongs rssUrl
+          @musicd_iface.play_list(JSON.generate(trackUrlList))
+        end
       end
     end
 

@@ -16,9 +16,10 @@ module RPiClock
   class MusicCache
     include Context
 
-    def initialize cacheDir
+    def initialize cacheDir, expire
       FileUtils.mkdir_p cacheDir if not File.exist? cacheDir
       @cacheDir = cacheDir
+      @expire = expire
     end
 
     def cached_list originalList
@@ -45,6 +46,11 @@ module RPiClock
         thread.join
         thread[:output]
       end
+    end
+
+    def cleanup
+      expDay = /(\d+)day/.match(@expire)[1]
+      `find #{@cacheDir} -atime +#{expDay} -exec rm -f {} \;`
     end
   end
 end

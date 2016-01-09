@@ -21,7 +21,7 @@ module RPiClock
     def initialize queue
       @queue = queue
       @mPlayer = MPlayer.new
-      @mCache = MusicCache.new conf['cache']['directory']
+      @mCache = MusicCache.new conf['cache']['directory'], conf['cache']['age']
     end
 
     def start
@@ -37,10 +37,7 @@ module RPiClock
           when :play_list
             playList = JSON.parse msg[:list]
             cacheList = @mCache.cached_list playList
-            tmpfile = Tempfile.new('playlist')
-            tmpfile.puts cacheList
-            tmpfile.close
-            logger.debug("[musicd] cacheList: #{cacheList.to_s}")
+            tmpfile = to_tmp_file(cacheList)
             @mPlayer.play_list(tmpfile.path)
           when :stop
             @mPlayer.stop
@@ -51,6 +48,13 @@ module RPiClock
           logger.error("[musicd] undefined message type")
         end
       end
+    end
+
+    def to_tmp_file list
+      tmpfile = Tempfile.new('list')
+      tmpfile.puts list
+      tmpfile.close
+      return tmpfile
     end
   end
 end
