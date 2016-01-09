@@ -35,6 +35,7 @@ module RPiClock
           when :play_file
             @mPlayer.play_file(msg[:path])
           when :play_list
+            @mCache.cleanup
             playList = JSON.parse msg[:list]
             cacheList = @mCache.cached_list playList
             tmpfile = to_tmp_file(cacheList)
