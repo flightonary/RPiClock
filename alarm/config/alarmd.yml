@@ -6,7 +6,7 @@ alarm:
   check_period: 60
 holiday:
   location: http://s-proj.com/utils/checkHoliday.php
-  case_of_true: ['hoiday']
+  case_of_true: ['holiday']
   case_of_false: ['else']
 itunes:
   rss:

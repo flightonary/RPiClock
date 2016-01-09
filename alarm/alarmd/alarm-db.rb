@@ -70,7 +70,7 @@ module RPiClock
           else
             nil
           end
-        logger.debug('get holiday flag : ' + flag)
+        logger.debug('holiday update. today is holiday? => ' + @todayIsHoliday.to_s)
       }.onFailure { |response|
         logger.warn('can not get holiday flag : ' + response.value)
       }.do
