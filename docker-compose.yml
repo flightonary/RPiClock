@@ -19,5 +19,3 @@ alarm:
     - /var/run/dbus:/var/run/dbus
     - ./alarm:/app
     - ./alarm/etc/mplayer/mplayer.conf:/etc/mplayer/mplayer.conf
-  links:
-    - web:localhost

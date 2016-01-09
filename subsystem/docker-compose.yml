@@ -1,0 +1,18 @@
+pulseaudio:
+  build: pulseaudio
+  container_name: pulseaudio
+  command: pulseaudio -vvv --log-target=stderr
+  volumes:
+    - /etc/localtime:/etc/localtime:ro
+    - /etc/machine-id:/etc/machine-id:ro
+    - ./pulseaudio/asound.conf:/etc/asound.conf
+    - ./pulseaudio/default.pa:/etc/pulse/default.pa
+    - ./pulseaudio/client.conf:/etc/pulse/client.conf
+    - ./pulseaudio/daemon.conf:/etc/pulse/daemon.conf
+  ports:
+    - "4713:4713"
+  devices:
+    - /dev/snd:/dev/snd
+  environment:
+    - HOME:/home/pulseaudio
+  working_dir: /home/pulseaudio

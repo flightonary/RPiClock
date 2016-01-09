@@ -2,5 +2,5 @@ log:
   output: STDOUT
   level:  DEBUG
 cache:
-  directory: /var/run/rpiclock/music-cache
+  directory: /tmp/music-cache
   age: 20day

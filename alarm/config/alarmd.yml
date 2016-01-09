@@ -2,7 +2,7 @@ log:
   output: STDOUT
   level:  DEBUG
 alarm:
-  location: http://localhost:3000/alarms.json
+  location: http://172.17.0.1:3000/alarms.json
   check_period: 60
 holiday:
   location: http://s-proj.com/utils/checkHoliday.php
