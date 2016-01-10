@@ -1,7 +1,7 @@
 # RPiClock/alarmd/message.rb
 #
 # This file is part of the RPiClock project
-# Copyright (C) 2013 jetbeaver
+# Copyright (C) 2013 tonary
 #
 # This is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Lesser General Public
