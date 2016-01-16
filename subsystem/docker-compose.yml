@@ -1,7 +1,7 @@
 pulseaudio:
   build: pulseaudio
   container_name: pulseaudio
-  command: pulseaudio -vvv --log-target=stderr
+  command: pulseaudio -vvv --log-target=stderr --use-pid-file=false
   volumes:
     - /etc/localtime:/etc/localtime:ro
     - /etc/machine-id:/etc/machine-id:ro
