@@ -5,6 +5,11 @@
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
+  <%= favicon_link_tag('favicon.ico') %>
+  <%= favicon_link_tag('apple-touch-icon-144×144-precomposed.png',
+                        {:rel => 'apple-touch-icon-precomposed',
+                         :sizes => '144x144',
+                         :type => 'image/png'}) %>
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <meta charset="utf-8">
 </head>
