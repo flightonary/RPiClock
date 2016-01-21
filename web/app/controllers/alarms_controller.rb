@@ -79,6 +79,7 @@ class AlarmsController < ApplicationController
       @alarm.sat = true
       @alarm.sun = true
       @alarm.snooze = true
+      @alarm.enabled = true
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
