@@ -22,3 +22,6 @@ web/log/*
 !web/log/.keep
 web/tmp/*
 !web/tmp/.keep
+
+# other
+.DS_Store

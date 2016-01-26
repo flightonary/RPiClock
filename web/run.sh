@@ -14,4 +14,5 @@ then
   export RAILS_SERVE_STATIC_FILES=true
 fi
 
+rm -f ./tmp/pids/server.pid
 bundle exec rails s -e$ENV -p 3000 -b '0.0.0.0'
