@@ -6,12 +6,14 @@ Alarm clock on Raspberry Pi
 **RPiClock** is a system for alarm clock service on Raspberry Pi. RPiClock provides a way setting alarms via web browser and play preview songs fetched from iTunes as alarm music.
 
 ## Required Systems and Services
-### Hardware
+### Platform
 - Raspberry Pi Model B, or later.
 - Plugable USB audio adapter (chip: C-Media HS-100B) or something equivalent
 
-### Software
+### OS
 - Arch Linux
+
+### Dependencies
 - docker
 - docker-compose (https://gist.github.com/jkawamoto/6bd4837db31b6e80c424)
 
