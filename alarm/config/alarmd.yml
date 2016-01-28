@@ -10,5 +10,5 @@ holiday:
   case_of_false: ['else']
 itunes:
   rss:
-    topsongs: 'https://itunes.apple.com/jp/rss/topsongs/limit=4/xml'
-    topalbums: https://itunes.apple.com/jp/rss/topalbums/limit=4/xml
+    topsongs: https://itunes.apple.com/jp/rss/topsongs/limit=4/xml
+    topalbums: void
