@@ -10,13 +10,14 @@ RPiClock is going to fetch preview songs based on iTunes RSS Feed you specify. Y
 
 ## Required Systems and Services
 ### Platform
-- Raspberry Pi Model B, or later.
+- Raspberry Pi Model B or later.
 - Plugable USB audio adapter (chip: C-Media HS-100B) or something equivalent
 
 ### OS
 - Arch Linux
 
 ### Dependencies
+- ALSA
 - docker
 - docker-compose (https://gist.github.com/jkawamoto/6bd4837db31b6e80c424)
 
