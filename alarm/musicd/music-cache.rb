@@ -46,7 +46,7 @@ module RPiClock
 
     def cleanup
       expDay = /(\d+)day/.match(@expire)[1]
-      `find #{@cacheDir} -atime +#{expDay} -exec rm -f {} \;`
+      `find #{@cacheDir} -atime +#{expDay} -exec rm -f {} \\;`
     end
   end
 end

@@ -3,4 +3,4 @@ log:
   level:  DEBUG
 cache:
   directory: /tmp/music-cache
-  age: 20day
+  age: 60day
