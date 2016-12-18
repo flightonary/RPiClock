@@ -6,7 +6,7 @@ Alarm clock on Raspberry Pi
 **RPiClock** is a system for alarm clock service on Raspberry Pi. RPiClock provides a way setting alarms via web browser and play preview songs fetched from iTunes as alarm music.
 
 ## Settings
-RPiClock is going to fetch preview songs based on iTunes RSS Feed you specify. You can set a RSS Feed in alarm/config/alarmd.yml. RSS Feed can be generated [here](https://rss.itunes.apple.com/).
+RPiClock fetches preview songs based on iTunes RSS Feed you specify. You can set a RSS Feed in alarm/config/alarmd.yml. RSS Feed can be generated [here](https://rss.itunes.apple.com/).
 
 ## Required Systems and Services
 ### Platform
