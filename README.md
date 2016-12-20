@@ -11,7 +11,6 @@ RPiClock fetches preview songs based on iTunes RSS Feed you specify. You can set
 ## Required Systems and Services
 ### Platform
 - Raspberry Pi Model B or later.
-- Plugable USB audio adapter (chip: C-Media HS-100B) or something equivalent
 
 ### OS
 - Arch Linux

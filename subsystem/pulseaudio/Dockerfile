@@ -3,6 +3,7 @@ FROM resin/rpi-raspbian:jessie
 
 RUN apt-get update -qq
 RUN apt-get install -y pulseaudio pulseaudio-utils
+RUN apt-get install -y alsa-utils
 RUN apt-get clean
 
 ENV HOSTOS_AUDIO_GID 92
