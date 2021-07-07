@@ -92,4 +92,4 @@ It can be launch on other system such as CentOS 7 on x86 server. If you want to 
     # docker-compose up -d
 
 ## Contributor
-tonary (jetbeaver@gmail.com)
+tonary (nekomelife@gmail.com)
